@@ -17,10 +17,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+
+        $nbPays = \App\Models\Pays::count();
+
         return [
-            'name' => fake()->name(),
+            'prenom' => fake()->firstName(),
+            'nom' => fake()->lastName(),
+            'telephone' => fake()->unique()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'pays_id' => fake()->numberBetween(1, $nbPays),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
