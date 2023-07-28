@@ -1,52 +1,258 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('layouts.app')
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+@section("title")
+    Inscription
+@endsection
+
+@section('content')
+
+    <!-- breadcrumb area start -->
+    <section class="breadcrumb__area pt-160 pb-40 p-relative">
+        <div class="breadrumb__shape">
+            <img class="breadcrumb__shape-1" src="assets/img/breadcrumb/breadcrumb-shape-1.png" alt="">
         </div>
+    </section>
+    <!-- breadcrumb area end -->
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    <!-- login area start -->
+    <section class="login__area pb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-8 col-xl-8 col-lg-8">
+                    <div class="login__wrapper">
+                        <div class="login__shape">
+                            <img class="login__shape-1" src="assets/img/login/login-person.png" alt="">
+                            <img class="login__shape-2" src="assets/img/login/login-shape-1.png" alt="">
+                            <img class="login__shape-3" src="assets/img/login/login-shape-2.png" alt="">
+                            <img class="login__shape-4" src="assets/img/login/login-shape-3.png" alt="">
+                        </div>
+                        <div class="login__top text-center">
+                            <h3>Inscription</h3>
+                            <p>Avez vous déjà un compte ? <a href="{{route("connexion.create")}}">Connectez-vous </a></p>
+                        </div>
+
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{{$error}}</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endforeach
+
+                        @if(session("fail"))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{{session("fail")}}</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        <div class="login__form">
+                            <form action="{{route("inscription.store")}}" method="post">
+                                @csrf
+                                <div class="login__input-box">
+                                    <div class="login__input-title">
+                                        <h4>Prénom </h4>
+                                    </div>
+                                    <div class="login__input">
+                                        <input type="text" placeholder="Entrez votre prénom" name="prenom">
+                                        <span class="login__input-icon">
+                                       <i class="fa-solid fa-user"></i>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="login__input-box">
+                                    <div class="login__input-title">
+                                        <h4>Nom <span>*</span></h4>
+                                    </div>
+                                    <div class="login__input">
+                                        <input type="text" placeholder="Entrez votre nom" name="nom" required>
+                                        <span class="login__input-icon">
+                                       <i class="fa-solid fa-user"></i>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="login__input-box">
+                                    <div class="login__input-title">
+                                        <h4>Sexe <span>*</span></h4>
+                                    </div>
+                                    <div class="login__input">
+                                        <select name="sexe" required>
+                                            <option value="M">Homme</option>
+                                            <option value="F">Femme</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="login__input-box">
+                                    <div class="login__input-title">
+                                        <h4>Adresse email <span>*</span></h4>
+                                    </div>
+                                    <div class="login__input">
+                                        <input type="email" placeholder="Entrez votre adresse email" name="email" required>
+                                        <span class="login__input-icon">
+                                       <i class="fa-light fa-envelope"></i>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="login__input-box">
+                                    <div class="login__input-title">
+                                        <h4>Numérode téléphone <span>*</span></h4>
+                                    </div>
+                                    <div class="login__input">
+                                        <input type="number" placeholder="Entrez le avec l'indicatif du pays" name="telephone" required>
+                                        <span class="login__input-icon">
+                                       <i class="fa-light fa-phone"></i>
+                                    </span>
+                                    </div>
+                                </div>
+
+                                <div class="login__input-box">
+                                    <div class="login__input-title">
+                                        <h4>Pays de résidence <span>*</span></h4>
+                                    </div>
+                                    <div class="login__input">
+                                        <select name="pays_id" required>
+                                            @foreach($pays as $pay)
+                                                <option value="{{$pay->id}}">{{$pay->nom}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="login__input-box">
+                                    <div class="login__input-title d-flex align-items-center justify-content-between">
+                                        <h4>Mot de passe <span>*</span></h4>
+                                    </div>
+                                    <div class="login__input">
+                                        <input type="password" placeholder="Entrer votre mot de passe" name="password">
+                                        <span class="login__input-icon">
+                                       <i class="fa-light fa-lock"></i>
+                                    </span>
+                                        <span class="login__input-password-visible">
+                                       <i class="fa-light fa-eye"></i>
+                                    </span>
+                                    </div>
+                                </div>
+
+                                <div class="login__input-box">
+                                    <div class="login__input-title d-flex align-items-center justify-content-between">
+                                        <h4>Confirmation <span>*</span></h4>
+                                    </div>
+                                    <div class="login__input">
+                                        <input type="password" placeholder="Confirmer le mot de passe" name="confirmation">
+                                        <span class="login__input-icon">
+                                       <i class="fa-light fa-lock"></i>
+                                    </span>
+                                        <span class="login__input-password-visible">
+                                       <i class="fa-light fa-eye"></i>
+                                    </span>
+                                    </div>
+                                </div>
+
+                                <div class="login__btn mb-20">
+                                    <button class="tp-btn-4 w-100">S'inscrire</button>
+                                </div>
+                                <div class="login__signup text-center">
+                                    <p>Ou <a href="{{route("connexion.create")}}">Connectez vous</a> avec votre adresse email</p>
+                                </div>
+                                <div class="login__option-wrapper">
+                                    <div class="login__option-item mb-15">
+                                        <a href="#" class="login__option-btn w-100"><img src="assets/img/icon/google.png" alt=""> Continuer avec Google</a>
+                                    </div>
+                                    <div class="login__option-item">
+                                        <a href="#" class="login__option-btn w-100"><img src="assets/img/icon/facebook.png" alt=""> Continuer avec Facebook</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+    <!-- login area end -->
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    <!-- share modal start -->
+    <div class="share__modal modal fade" id="sharemodal" tabindex="-1" aria-labelledby="sharemodal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="share__modal-content text-center">
+                    <div class="share__nft-content">
+                        <div class="share__thumb">
+                            <img src="assets/img/bid/bid-img-1.jpg" alt="">
+                        </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    </div>
+                    <div class="share__social">
+                        <h3>Share this NFT</h3>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+    <!-- share modal end -->
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+    <!-- report modal start -->
+    <div class="report__modal modal fade" id="reportmodal" tabindex="-1" aria-labelledby="reportmodal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="report__close">
+                    <button type="button" class="report__close-btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-regular fa-xmark"></i></button>
+                </div>
+                <div class="report__wrapper">
+                    <h3 class="report__title">Why are you reporting ?</h3>
+                    <p>Describe briefly A propos your report.</p>
+                    <form action="#">
+                        <div class="report__input-box">
+                            <h4>Message</h4>
+                        </div>
+                        <div class="report__input">
+                            <textarea placeholder="Write your message"></textarea>
+                        </div>
+                        <div class="report__button">
+                            <button type="button" class="tp-btn-square">Send </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+    </div>
+    <!-- report modal end -->
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+    <!-- bid popup area start -->
+    <div class="bid__modal modal fade" id="bidmodal" tabindex="-1" aria-labelledby="bidmodal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="bid__modal-close">
+                    <button type="button" class="bid__modal-close-btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-regular fa-xmark"></i></button>
+                </div>
+                <div class="bid__modal">
+                    <h3 class="bid__modal-title">Place your bid</h3>
+                    <p>You are A propos to place bid on this product</p>
 
-            <x-primary-button class="ml-4">
-                {{ __('Register') }}
-            </x-primary-button>
+                    <div class="bid__modal-form">
+                        <form action="#">
+                            <div class="bid__modal-input">
+                                <input type="text" placeholder="Enter your bid">
+                                <span class="bid__modal-price">ETH</span>
+                            </div>
+                            <div class="bid__modal-info">
+                                <p>Your Balance <span>254 ETH</span></p>
+                                <p>Service fee <span>10 ETH</span></p>
+                                <p>Total <span class="color-theme">264 ETH</span></p>
+                            </div>
+                            <div class="bid__modal-btn">
+                                <button type="submit" class="tp-btn-3">Place bid</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
-</x-guest-layout>
+    </div>
+    <!-- bid popup area end -->
+
+@endsection

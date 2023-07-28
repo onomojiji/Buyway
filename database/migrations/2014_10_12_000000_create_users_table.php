@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("avatar")->nullable();
             $table->string('prenom')->nullable();
             $table->string('nom');
+            $table->string('sexe');
             $table->string('telephone')->unique();
             $table->string('solde')->default(0);
             $table->string('email')->unique();

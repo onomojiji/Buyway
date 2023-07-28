@@ -21,12 +21,13 @@ class User extends Authenticatable
         "avatar",
         'prenom',
         "nom",
+        "sexe",
         "telephone",
         "email",
         'solde',
         'password',
         "active",
-        "pay_id"
+        "pays_id"
     ];
 
     /**
