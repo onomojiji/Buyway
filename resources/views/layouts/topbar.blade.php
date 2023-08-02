@@ -75,15 +75,15 @@
                                                 </div>
                                             </div>
                                             <div class="compte__dropdown-balance">
-                                                <p>Solde: <span>{{number_format(\Illuminate\Support\Facades\Auth::user()->solde, 2)." Fcfa"}}</span></p>
+                                                <p>Solde: <span>{{number_format(\Illuminate\Support\Facades\Auth::user()->solde)." USD"}}</span></p>
                                             </div>
                                             <div class="compte__dropdown-action">
                                                 <ul>
                                                     <li>
-                                                        <a href="profile.html"><i class="fa-regular fa-upload"></i> Recharger</a>
+                                                        <a href="{{route("depot.create")}}"><i class="fa-regular fa-upload"></i> Recharger</a>
                                                     </li>
                                                     <li>
-                                                        <a href="edit-profile.html"><i class="fa-regular fa-download"></i> Retirer</a>
+                                                        <a href="{{route("retrait.create")}}"><i class="fa-regular fa-download"></i> Retirer</a>
                                                     </li>
                                                     <li>
                                                         <form action="{{route("logout")}}" method="post">
@@ -116,10 +116,10 @@
                                         <div class="compte__dropdown-action">
                                             <ul>
                                                 <li>
-                                                    <a href="profile.html"><i class="fa-regular fa-envelope"></i>Recharger</a>
+                                                    <a href="{{route("depot.create")}}"><i class="fa-regular fa-envelope"></i>Recharger</a>
                                                 </li>
                                                 <li>
-                                                    <a href="edit-profile.html"><i class="fa-regular fa-gear"></i>Retirer</a>
+                                                    <a href="{{route("retrait.create")}}"><i class="fa-regular fa-gear"></i>Retirer</a>
                                                 </li>
                                                 <li>
                                                     <form action="{{route("logout")}}" method="post">

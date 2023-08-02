@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("numero");
             $table->foreignId("pays_id")->nullable()->constrained("pays");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

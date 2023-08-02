@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->binary("type");
             $table->string("nom");
+            $table->string("description");
             $table->timestamps();
         });
     }

@@ -11,8 +11,10 @@ class UserTransaction extends Model
 
     protected $fillable = [
         "user_id",
+        "transaction_id",
         "numero_paiment_id",
         "montant",
+        "reference",
         "status",
     ];
 
@@ -33,7 +35,7 @@ class UserTransaction extends Model
 
     public function getMontantAttribute($value)
     {
-        return $value . " FCFA";
+        return number_format($value) . " USD";
     }
 
 }

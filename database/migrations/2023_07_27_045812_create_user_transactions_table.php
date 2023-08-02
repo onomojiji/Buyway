@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('user_transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->nullable()->constrained("users");
-            $table->foreignId("numero_paiment_id")->nullable()->constrained("numero_paiments");
+            $table->foreignId("transaction_id")->constrained("transactions");
+            $table->foreignId("user_id")->constrained("users");
+            $table->foreignId("numero_paiment_id")->constrained("numero_paiments");
             $table->string("montant");
-            $table->boolean("status")->default(false);
+            $table->string("reference")->unique();
+            $table->enum("status", ['pending', 'success', 'canceled'])->default('pending');
             $table->timestamps();
+            $table->dateTime("validated_at")->nullable();
         });
     }
 
