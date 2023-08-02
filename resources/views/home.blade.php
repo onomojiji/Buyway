@@ -731,19 +731,26 @@ Accueil
                     <button type="button" class="bid__modal-close-btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-regular fa-xmark"></i></button>
                 </div>
                 <div class="bid__modal">
-                    <h3 class="bid__modal-title">Place your bid</h3>
-                    <p>You are about to place bid on this product</p>
+                    <h3 class="bid__modal-title">Nouvel investissement</h3>
+                    <p>Veuillez remplir le formulaire ci dessous pour placer votre investissement</p>
 
                     <div class="bid__modal-form">
-                        <form action="#">
+                        <form action="#" method="post">
                             <div class="bid__modal-input">
-                                <input type="text" placeholder="Enter your bid">
-                                <span class="bid__modal-price">ETH</span>
+                                <input type="number" placeholder="Entrez le montant" min="100">
+                                <span class="bid__modal-price">USD</span>
                             </div>
-                            <div class="bid__modal-info">
-                                <p>Your Balance <span>254 ETH</span></p>
-                                <p>Service fee <span>10 ETH</span></p>
-                                <p>Total <span class="color-theme">264 ETH</span></p>
+                            <div class="login__input-box">
+                                <div class="login__input-title">
+                                    <h4>Nombre de jour d'investissement <span>*</span></h4>
+                                </div>
+                                <div class="login__input">
+                                    <select name="nbjours" required>
+                                        @for($i=1; $i<=30; $i++)
+                                            <option value="{{$i}}">{{$i}}</option>
+                                        @endfor
+                                    </select>
+                                </div>
                             </div>
                             <div class="bid__modal-btn">
                                 <button type="submit" class="tp-btn-3">Place bid</button>

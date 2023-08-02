@@ -12,6 +12,19 @@ class TransactionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $transactions = [
+          [
+              "nom" => "depot",
+              "description" => "depot d'argent",
+          ],
+            [
+                "nom" => "retrait",
+                "description" => "retrait d'argent",
+            ],
+        ];
+
+        foreach ($transactions as $transaction) {
+            \App\Models\Transaction::create($transaction);
+        }
     }
 }
